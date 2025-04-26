@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { quotes } from "./quotes";
 import { PixelBorder } from "./components/PixelBorder";
-import { generateFrameMetadata } from "./frame";
 
 function getRandomQuote() {
   return quotes[Math.floor(Math.random() * quotes.length)];
@@ -9,21 +8,6 @@ function getRandomQuote() {
 
 function App() {
   const [quote, setQuote] = useState(getRandomQuote());
-
-  // Обновляем мета-теги при изменении цитаты
-  useEffect(() => {
-    const metadata = generateFrameMetadata(quote);
-    // Обновляем мета-теги для Frame
-    Object.entries(metadata).forEach(([key, value]) => {
-      let meta = document.querySelector(`meta[property="${key}"]`);
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute('property', key);
-        document.head.appendChild(meta);
-      }
-      meta.setAttribute('content', value);
-    });
-  }, [quote]);
 
   const handleNewQuote = () => {
     setQuote(getRandomQuote());
@@ -44,7 +28,7 @@ function App() {
         minHeight: "100dvh",
       }}
     >
-      {/* Остальной код остаётся без изменений */}
+      {/* Pixel pluses on background */}
       <div className="absolute top-2 left-2 text-purple-300 text-lg sm:text-2xl select-none pointer-events-none">+</div>
       <div className="absolute bottom-10 right-4 text-pink-300 text-base sm:text-xl select-none pointer-events-none">+</div>
       <div className="absolute top-1/2 left-1/4 text-orange-200 text-sm sm:text-lg select-none pointer-events-none">+</div>
